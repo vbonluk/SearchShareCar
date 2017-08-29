@@ -6,6 +6,7 @@ import time
 from win10toast import ToastNotifier
 import os
 import json
+import sys
 
 import ssl
 # 设置 全局取消证书验证 http://blog.csdn.net/moonhillcity/article/details/52767999
@@ -96,13 +97,24 @@ def searchCar():
             notifyStr = notifyStr + str
 
         # Windows 系统通知
-        toaster.show_toast(notifyStr ,'WarmCar有车啦 ')
+        icon_file = cur_file_dir() + "/icon_searchCar.ico"
+        toaster.show_toast(notifyStr ,'WarmCar有车啦 ',icon_file)
         print(canRentalAddressList)
+        # print(cur_file_dir())
 
     else:
 
         print('WarmCar还没有车：' + orderName)
 
+#获取脚本文件的当前路径
+def cur_file_dir():
+     #获取脚本路径
+     path = sys.path[0]
+     #判断为脚本文件还是py2exe编译后的文件，如果是脚本文件，则返回的是脚本的目录，如果是py2exe编译后的文件，则返回的是编译后的文件路径
+     if os.path.isdir(path):
+         return path
+     elif os.path.isfile(path):
+         return os.path.dirname(path)
 
 def runSearchCar():
     searchCar()
