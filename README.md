@@ -2,7 +2,7 @@
 
 hack 怡行.有车、宜步出行、warmCar我们用车
 
-# Mac os
+# Mac OS
 
 run SearchShareCar_2.py
 
