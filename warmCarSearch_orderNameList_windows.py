@@ -40,7 +40,7 @@ def searchCar():
     uc.__dict__ = r.json()
 
     isHave = False
-    orderNameList = ['安驰修车行', '山姆']
+    orderNameList = ['金嘉', '山姆']
     canRentalAddressList = []
     nowTime = time.strftime('%H:%M:%S',time.localtime(time.time()))
     print(nowTime)
@@ -98,15 +98,7 @@ def searchCar():
 
     if isHave == True:
         print('***WarmCar有车啦***')
-        notifyStr = ''
-        for str in canRentalAddressList:
-            notifyStr = notifyStr + str
-
-        # Windows 系统通知
-        icon_file = cur_file_dir() + "/icon_searchCar.ico"
-        toaster.show_toast(notifyStr ,'WarmCar有车啦 ',icon_file)
         print(canRentalAddressList)
-        # print(cur_file_dir())
 
     for orderName_2 in orderNameList:
         isStationHaveCar = False
@@ -117,6 +109,16 @@ def searchCar():
         if isStationHaveCar == False:
             print('WarmCar还没有车：' + orderName_2)
 
+    # 由于调用Windows的GUI空间耗时比较长，故放到最后执行。
+    if isHave == True:
+        notifyStr = ''
+        for str in canRentalAddressList:
+            notifyStr = notifyStr + str
+
+        # Windows 系统通知
+        icon_file = cur_file_dir() + "/icon_searchCar.ico"
+        toaster.show_toast(notifyStr, 'WarmCar有车啦 ', icon_file)
+        # print(cur_file_dir())
 
 #获取脚本文件的当前路径
 def cur_file_dir():
