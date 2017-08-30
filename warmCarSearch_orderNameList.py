@@ -37,7 +37,7 @@ def searchCar():
     uc.__dict__ = r.json()
 
     isHave = False
-    orderNameList = ['安驰修车行','山姆']
+    orderNameList = ['安驰修车行','力航','山姆']
     canRentalAddressList = []
     nowTime = time.strftime("%l:%M:%S", time.localtime())
     print(nowTime)
@@ -104,9 +104,16 @@ def searchCar():
         Notifier.remove('bbb')
         print(canRentalAddressList)
 
-    else:
 
-        print('WarmCar还没有车：' + orderName)
+    for orderName_2 in orderNameList:
+        isStationHaveCar = False
+        for str in canRentalAddressList:
+            if orderName_2 in str:  # 模糊对比，包含有字符就行
+                isStationHaveCar = True
+
+        if isStationHaveCar == False:
+            print('WarmCar还没有车：' + orderName_2)
+
 
 
 def runSearchCar():

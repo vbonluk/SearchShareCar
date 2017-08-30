@@ -108,9 +108,15 @@ def searchCar():
         print(canRentalAddressList)
         # print(cur_file_dir())
 
-    else:
+    for orderName_2 in orderNameList:
+        isStationHaveCar = False
+        for str in canRentalAddressList:
+            if orderName_2 in str:  # 模糊对比，包含有字符就行
+                isStationHaveCar = True
 
-        print('WarmCar还没有车：' + orderName)
+        if isStationHaveCar == False:
+            print('WarmCar还没有车：' + orderName_2)
+
 
 #获取脚本文件的当前路径
 def cur_file_dir():
