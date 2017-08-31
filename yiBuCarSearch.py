@@ -6,6 +6,7 @@ import time
 from pync import Notifier
 import os
 import json
+import sys
 
 import ssl
 # 设置 全局取消证书验证 http://blog.csdn.net/moonhillcity/article/details/52767999
@@ -29,8 +30,8 @@ class yiBuQueryAllModel:
 
 def searchCar():
 
-    latitude = '22.254915'
-    longitude = '113.55859'
+    latitude = '23.027622'
+    longitude = '113.758517'
 
     # 有车查询
     urlJsonParam = {'instance':'5000','latitude':latitude,'longitude':longitude,'cityCode':'440400'}
@@ -99,14 +100,25 @@ def searchCar():
             notifyStr = notifyStr + str
 
         # Mac os 系统通知
-        Notifier.notify(notifyStr,title='宜步有车啦 ' + nowTime,group='ccc')
+        icon_file = cur_file_dir() + "/icon_searchCar.ico"
+        Notifier.notify(notifyStr, title='宜步有车啦 ' + nowTime, group='ccc', closeLabel='关闭', actions='一键下单(暂不开放)',
+                        appIcon=icon_file)
         Notifier.remove('ccc')
         print(canRentalAddressList)
 
     else:
 
-        print('宜步还没有车')
+        print('宜步还没有车,请切换城市')
 
+#获取脚本文件的当前路径
+def cur_file_dir():
+     #获取脚本路径
+     path = sys.path[0]
+     #判断为脚本文件还是py2exe编译后的文件，如果是脚本文件，则返回的是脚本的目录，如果是py2exe编译后的文件，则返回的是编译后的文件路径
+     if os.path.isdir(path):
+         return path
+     elif os.path.isfile(path):
+         return os.path.dirname(path)
 
 def runSearchCar():
     searchCar()

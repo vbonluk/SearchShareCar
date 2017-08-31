@@ -6,6 +6,7 @@ import time
 from pync import Notifier
 import os
 import json
+import sys
 
 import ssl
 # 设置 全局取消证书验证 http://blog.csdn.net/moonhillcity/article/details/52767999
@@ -87,14 +88,25 @@ def searchCar():
             notifyStr = notifyStr + str
 
         # Mac os 系统通知
-        Notifier.notify(notifyStr,title='WarmCar有车啦 ' + nowTime,group='bbb')
+        icon_file = cur_file_dir() + "/icon_searchCar.ico"
+        Notifier.notify(notifyStr, title='WarmCar有车啦 ' + nowTime, group='bbb', closeLabel='关闭', actions='一键下单(暂不开放)',
+                        appIcon=icon_file)
         Notifier.remove('bbb')
         print(canRentalAddressList)
 
     else:
 
-        print('WarmCar还没有车')
+        print('WarmCar还没有车,请切换城市')
 
+#获取脚本文件的当前路径
+def cur_file_dir():
+     #获取脚本路径
+     path = sys.path[0]
+     #判断为脚本文件还是py2exe编译后的文件，如果是脚本文件，则返回的是脚本的目录，如果是py2exe编译后的文件，则返回的是编译后的文件路径
+     if os.path.isdir(path):
+         return path
+     elif os.path.isfile(path):
+         return os.path.dirname(path)
 
 def runSearchCar():
     searchCar()
